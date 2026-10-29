@@ -1,0 +1,70 @@
+[package]
+name = "haunttrace"
+version = "0.1.0"
+description = "HauntTrace - a local AI ghost detective for Windows"
+edition = "2021"
+license = "MIT"
+default-run = "haunttrace"
+
+[lib]
+name = "haunttrace_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "haunttrace"
+path = "src/main.rs"
+
+# The controlled test process (burner/) is a separate, dependency-free crate
+# so it can be built before the app (Tauri bundles it as a sidecar).
+[workspace]
+members = [".", "burner"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync"] }
+tokio-util = "0.7"
+async-trait = "0.1"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+tauri-plugin-single-instance = { version = "2", features = ["deep-link"] }
+tauri-plugin-deep-link = "2"
+
+[dependencies.windows]
+version = "0.61"
+features = [
+  "Win32_Foundation",
+  "Win32_Security",
+  "Win32_Security_Credentials",
+  "Win32_Security_Cryptography",
+  "Win32_Security_Cryptography_Catalog",
+  "Win32_Security_Cryptography_Sip",
+  "Win32_Security_WinTrust",
+  "Win32_Storage_FileSystem",
+  "Win32_System_Diagnostics_ToolHelp",
+  "Win32_System_ProcessStatus",
+  "Win32_System_RemoteDesktop",
+  "Win32_System_SystemInformation",
+  "Win32_System_Threading",
+  "Win32_System_Time",
+  "Win32_Media_Audio",
+  "Win32_System_IO",
+  "Win32_System_Com",
+  "Foundation",
+  "Media_Core",
+  "Media_SpeechSynthesis",
+  "Storage_Streams",
+  "UI_Notifications",
+  "Data_Xml_Dom",
+  "Win32_System_Registry",
+]
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true

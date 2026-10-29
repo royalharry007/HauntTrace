@@ -1,0 +1,36 @@
+{
+  "name": "haunttrace",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "HauntTrace - a lightweight local AI ghost detective for Windows",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "tauri": "tauri",
+    "build:burner": "node scripts/build-burner.mjs",
+    "app:dev": "npm run build:burner && tauri dev",
+    "app:build": "npm run build:burner -- --release && tauri build",
+    "test:rust": "cargo test --manifest-path src-tauri/Cargo.toml",
+    "check:secrets": "node scripts/check-secrets.mjs"
+  },
+  "dependencies": {
+    "@fontsource/silkscreen": "^5.3.0",
+    "@fontsource/vt323": "^5.3.0",
+    "@tauri-apps/api": "2.12.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.4",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
+    "vitest": "2.1.8"
+  }
+}

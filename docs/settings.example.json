@@ -1,0 +1,39 @@
+{
+  "monitoring": { "enabled": true, "interval_secs": 5 },
+  "rules": {
+    "lingering": { "enabled": true, "runtime_minutes": 180, "min_avg_cpu": 5.0, "window_minutes": 10 },
+    "sustained_cpu": { "enabled": true, "cpu_percent": 25.0, "consecutive_samples": 12, "release_ratio": 0.6 },
+    "spikes": { "enabled": true, "spike_cpu_percent": 40.0, "min_spikes": 4, "window_minutes": 5 },
+    "memory_growth": { "enabled": true, "window_minutes": 15, "min_growth_percent": 50.0, "min_growth_mb": 300 },
+    "restarts": { "enabled": true, "min_restarts": 3, "window_minutes": 10 },
+    "cooldown_minutes": 30
+  },
+  "alerts": {
+    "notifications_enabled": true,
+    "sound_enabled": true,
+    "volume": 45,
+    "quiet_hours_enabled": false,
+    "quiet_start_min": 1320,
+    "quiet_end_min": 420,
+    "min_interval_secs": 60,
+    "max_per_hour": 6
+  },
+  "exclusions": ["System Idle Process", "System", "Registry", "Memory Compression", "Secure System", "haunttrace.exe"],
+  "model": {
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "gemma4:e2b-it-qat",
+    "max_steps": 4,
+    "time_budget_secs": 300,
+    "call_timeout_secs": 150,
+    "keep_alive_minutes": 5
+  },
+  "voice": {
+    "mode": "off",
+    "windows_voice": "",
+    "voice_id": "",
+    "model_id": "eleven_flash_v2_5",
+    "only_significant": false,
+    "cache_enabled": true
+  },
+  "history": { "retention_days": 30, "max_alerts": 500 }
+}
